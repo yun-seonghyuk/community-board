@@ -7,6 +7,9 @@ import com.community.communityboard.domain.post.model.dto.request.PostRequestDto
 import com.community.communityboard.domain.post.model.dto.response.PostResponseDto;
 import com.community.communityboard.global.common.ServiceResult;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +26,22 @@ public class PostController {
                                         @AuthenticationPrincipal final UserDetailsImpl userDetails) {
         return ResponseEntity.ok()
                 .body(postService.createPost(requestDto, userDetails.getUser()));
+    }
+    @GetMapping("/posts")
+    public ResponseEntity<?> getAllPosts(@PageableDefault(page = 0, size = 10,
+            sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok().body(postService.getAllPosts(pageable));
+    }
+
+    @GetMapping("/posts/like")
+    public ResponseEntity<?> getAllLikePosts(@PageableDefault(page = 0, size = 10,
+            sort = "likeCount", direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok().body(postService.getAllLikePosts(pageable));
+    }
+
+    @GetMapping("/posts/{id}")
+    public ResponseEntity<?> getPost(@PathVariable final Long id) {
+        return ResponseEntity.ok().body(postService.getPost(id));
     }
 
     @PutMapping("/post/{id}")

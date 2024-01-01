@@ -11,6 +11,8 @@ import com.community.communityboard.domain.post.repository.PostRepository;
 import com.community.communityboard.global.config.RedisCacheConfig;
 import com.community.communityboard.global.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +33,30 @@ public class PostServiceImpl implements PostService {
     public PostResponseDto createPost(PostRequestDto requestDto, User user) {
         Post post = postRepository.save(Post.createPost(user, requestDto));
         return PostResponseDto.of(post);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Page<PostResponseDto> getAllPosts(Pageable pageable) {
+        Page<Post> postPage = postRepository.findAllPost(pageable);
+
+        return postPage.map(post -> PostResponseDto.from(
+                post,
+                getViewsCountForPost(post.getId()),
+                getLikesCountForPost(post.getId())
+        ));
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Page<PostResponseDto> getAllLikePosts(Pageable pageable) {
+        Page<Post> postPage = postRepository.findAllPostLikeDesc(pageable);
+
+        return postPage.map(post -> PostResponseDto.from(
+                post,
+                getLikesCountForPost(post.getId()),
+                getViewsCountForPost(post.getId())
+        ));
     }
 
     @Override
