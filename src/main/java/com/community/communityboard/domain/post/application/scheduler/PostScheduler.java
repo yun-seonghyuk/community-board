@@ -23,6 +23,14 @@ public class PostScheduler {
     @Scheduled(cron = "0 0 0 * * *") // 매일 자정에 실행
     @Transactional
     public void ViewLikeCountDBUpdate() {
+        Set<String> keys = redisCacheConfig.redisTemplate().keys("post:*:view_count");
+        for (String key : Objects.requireNonNull(keys)) {
+            Long postId = Long.parseLong(key.split(":")[1]);
+            String viewCount = redisCacheConfig.redisTemplate().opsForValue().get(key);
+
+            postRepository.findById(postId).ifPresent(view ->
+                    view.viewCountUpdate(Integer.parseInt(Objects.requireNonNull(viewCount))));
+        }
 
         Set<String> likeKeys = redisCacheConfig.redisTemplate().keys("post:*:likes");
         for (String key : Objects.requireNonNull(likeKeys)) {

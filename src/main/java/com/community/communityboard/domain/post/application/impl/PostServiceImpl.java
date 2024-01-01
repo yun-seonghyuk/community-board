@@ -33,6 +33,33 @@ public class PostServiceImpl implements PostService {
         return PostResponseDto.of(post);
     }
 
+    @Override
+    public PostResponseDto getPost(Long id) {
+        Post post = findPostOrElseThrow(id);
+        postViewCount(id);
+        return PostResponseDto.from(post, getLikesCountForPost(id), getViewsCountForPost(id));
+    }
+
+    private void postViewCount(Long postId) {
+        redisCacheConfig.redisTemplate()
+                .opsForValue()
+                .increment(RedisUtil.postViewKey(postId), 1);
+    }
+    // dto 반환 좋아요
+    private Integer getLikesCountForPost(Long postId) {
+        String likes = redisCacheConfig.redisTemplate().opsForValue()
+                .get(RedisUtil.postLikesKey(postId));
+        return likes != null ? Integer.parseInt(likes) : 0;
+    }
+
+    // dto 반환 조회수
+    private Integer getViewsCountForPost(Long postId) {
+        String views = redisCacheConfig.redisTemplate().opsForValue()
+                .get(RedisUtil.postViewKey(postId));
+        return views != null ? Integer.parseInt(views) : 0;
+    }
+
+
     @Transactional
     @Override
     public PostResponseDto updatePost(Long id, PostRequestDto postRequestDto, User user) {

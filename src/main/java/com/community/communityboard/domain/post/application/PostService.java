@@ -8,6 +8,8 @@ public interface PostService {
 
     PostResponseDto createPost(PostRequestDto requestDto, User user);
 
+    PostResponseDto getPost(Long id);
+
     PostResponseDto updatePost(Long id, PostRequestDto postRequestDto, User user);
 
     void deletePost(Long id, User user);
