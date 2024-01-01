@@ -1,6 +1,5 @@
 package com.community.communityboard.domain.post.application;
 
-
 import com.community.communityboard.domain.auth.model.entity.User;
 import com.community.communityboard.domain.post.model.dto.request.PostRequestDto;
 import com.community.communityboard.domain.post.model.dto.response.PostResponseDto;
@@ -13,4 +12,5 @@ public interface PostService {
 
     void deletePost(Long id, User user);
 
+    void likePost(Long postId, Long id);
 }

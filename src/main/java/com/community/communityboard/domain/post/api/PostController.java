@@ -40,5 +40,10 @@ public class PostController {
                 .body(ServiceResult.success("delete success!"));
     }
 
-
+    @PostMapping("post/{postId}/like")
+    public ResponseEntity<?> likePost(@PathVariable final Long postId,
+                                      @AuthenticationPrincipal final UserDetailsImpl userDetails) {
+        postService.likePost(postId, userDetails.getUser().getId());
+        return ResponseEntity.ok("Post liked successfully");
+    }
 }
