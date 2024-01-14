@@ -39,8 +39,6 @@ public class User extends TimeStamped {
                 .email(requestDto.getEmail())
                 .role(role)
                 .build();
-
     }
-
 
 }

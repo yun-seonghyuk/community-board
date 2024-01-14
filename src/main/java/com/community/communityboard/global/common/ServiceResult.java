@@ -17,9 +17,10 @@ public class ServiceResult {
     private int status;
     private HttpStatus statusCode;
     private String message;
+
     public static ServiceResult fail(ErrorCode errorCode) {
         return ServiceResult.builder()
-                .status(HttpStatus.BAD_REQUEST.value())
+                .status(errorCode.getStatusCode().value())
                 .statusCode(errorCode.getStatusCode())
                 .message(errorCode.getMessage())
                 .build();

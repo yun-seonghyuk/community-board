@@ -4,7 +4,6 @@ package com.community.communityboard.domain.post.model.entity;
 import com.community.communityboard.domain.auth.model.entity.User;
 import com.community.communityboard.domain.comment.model.entity.Comment;
 import com.community.communityboard.domain.post.model.dto.request.PostRequestDto;
-import com.community.communityboard.global.common.entity.TimeStamped;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,7 +17,7 @@ import java.util.List;
 @Builder(access = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "post")
-public class Post extends TimeStamped {
+public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,11 +35,17 @@ public class Post extends TimeStamped {
     @Column
     private Integer likeCount;
 
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(updatable = false)
+    private LocalDateTime modifiedAt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE})
+    @OneToMany(mappedBy = "post", cascade = {CascadeType.ALL})
     private List<Comment> commentList;
 
     public static Post createPost(User user, PostRequestDto requestDto){
@@ -50,21 +55,22 @@ public class Post extends TimeStamped {
                 .content(requestDto.getContent())
                 .viewCount(0)
                 .likeCount(0)
+                .createdAt(LocalDateTime.now())
+                .modifiedAt(LocalDateTime.now())
                 .build();
     }
 
     public void postUpdate(PostRequestDto postRequestDto) {
         this.title = postRequestDto.getTitle();
         this.content = postRequestDto.getContent();
-        this.setModifiedAt(LocalDateTime.now());
     }
 
 
-    public void viewCountUpdate(int viewCount) {
+    public void viewCountUpdate(Integer viewCount) {
         this.viewCount = viewCount;
     }
 
-    public void likeCountUpdate(int likeCount){
+    public void likeCountUpdate(Integer likeCount){
         this.likeCount = likeCount;
     }
 }

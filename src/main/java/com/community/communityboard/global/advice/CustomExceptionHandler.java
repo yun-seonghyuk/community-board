@@ -14,13 +14,13 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(PostException.class)
     public ResponseEntity<?> postExceptionHandler(PostException e){
-        return ResponseEntity.ok()
+        return ResponseEntity.status(e.getErrorCode().getStatusCode())
                 .body(ServiceResult.fail(e.getErrorCode()));
     }
 
     @ExceptionHandler(MemberException.class)
     public ResponseEntity<?> memberExceptionHandler(MemberException e){
-        return ResponseEntity.ok()
+        return ResponseEntity.status(e.getErrorCode().getStatusCode())
                 .body(ServiceResult.fail(e.getErrorCode()));
     }
 

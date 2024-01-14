@@ -4,8 +4,9 @@ package com.community.communityboard.domain.post.api;
 import com.community.communityboard.domain.auth.sercurity.UserDetailsImpl;
 import com.community.communityboard.domain.post.application.PostService;
 import com.community.communityboard.domain.post.model.dto.request.PostRequestDto;
-import com.community.communityboard.domain.post.model.dto.response.PostResponseDto;
+import com.community.communityboard.domain.post.model.dto.response.PostAllResponseDto;
 import com.community.communityboard.global.common.ServiceResult;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,7 +23,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/post")
-    public ResponseEntity<?> createPost(@RequestBody final PostRequestDto requestDto,
+    public ResponseEntity<?> createPost(@RequestBody @Valid final PostRequestDto requestDto,
                                         @AuthenticationPrincipal final UserDetailsImpl userDetails) {
         return ResponseEntity.ok()
                 .body(postService.createPost(requestDto, userDetails.getUser()));
@@ -45,9 +46,9 @@ public class PostController {
     }
 
     @PutMapping("/post/{id}")
-    public PostResponseDto updatePost(@PathVariable final Long id,
-                                      @RequestBody final PostRequestDto postRequestDto,
-                                      @AuthenticationPrincipal final UserDetailsImpl userDetails) {
+    public PostAllResponseDto updatePost(@PathVariable final Long id,
+                                         @RequestBody @Valid final PostRequestDto postRequestDto,
+                                         @AuthenticationPrincipal final UserDetailsImpl userDetails) {
         return postService.updatePost(id, postRequestDto, userDetails.getUser());
     }
 

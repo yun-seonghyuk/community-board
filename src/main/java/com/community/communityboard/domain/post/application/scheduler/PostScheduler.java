@@ -20,7 +20,7 @@ public class PostScheduler {
 
 
     // Write-Back
-    @Scheduled(cron = "0 0 0 * * *") // 매일 자정에 실행
+    @Scheduled(fixedDelay = 60000)
     @Transactional
     public void ViewLikeCountDBUpdate() {
         Set<String> keys = redisCacheConfig.redisTemplate().keys("post:*:view_count");

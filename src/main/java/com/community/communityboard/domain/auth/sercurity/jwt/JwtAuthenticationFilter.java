@@ -11,12 +11,15 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 @Slf4j(topic = "로그인 및 JWT 생성")
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -68,9 +71,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         jsonResponse.put("role", user.getRole().toString());
 
         // HTTP 응답 설정
-        response.setStatus(200);
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
+        response.setStatus(HttpStatus.OK.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.getWriter().write(jsonResponse.toString());
     }
 
@@ -85,9 +88,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         jsonResponse.put("msg", "아이디와 비밀번호가 맞지 않습니다.");
 
         // HTTP 응답 설정
-        response.setStatus(400);
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.getWriter().write(jsonResponse.toString());
     }
 }
