@@ -61,12 +61,6 @@ public class PostServiceImpl implements PostService {
                 .opsForValue()
                 .increment(RedisUtil.postViewKey(postId), 1);
     }
-    // dto 반환 좋아요
-    private Integer getLikesCountForPost(Long postId) {
-        String likes = redisTemplate.opsForValue()
-                .get(RedisUtil.postLikesKey(postId));
-        return likes != null ? Integer.parseInt(likes) : 0;
-    }
 
     @Override
     public void likePost(Long postId, Long userId) {

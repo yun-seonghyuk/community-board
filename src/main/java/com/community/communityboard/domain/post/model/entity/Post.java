@@ -29,10 +29,10 @@ public class Post {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column
+    @Column(nullable = false)
     private Integer viewCount;
 
-    @Column
+    @Column(nullable = false)
     private Integer likeCount;
 
     @Column(updatable = false)
@@ -45,6 +45,7 @@ public class Post {
     @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
+    @OrderBy("createdAt DESC")
     @OneToMany(mappedBy = "post", cascade = {CascadeType.ALL})
     private List<Comment> commentList;
 
