@@ -23,7 +23,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/post")
-    public ResponseEntity<?> createPost(@RequestBody @Valid final PostRequestDto requestDto,
+    public ResponseEntity<?> createPost(@RequestBody @Valid PostRequestDto requestDto,
                                         @AuthenticationPrincipal final UserDetailsImpl userDetails) {
         return ResponseEntity.ok()
                 .body(postService.createPost(requestDto, userDetails.getUser()));
@@ -47,7 +47,7 @@ public class PostController {
 
     @PutMapping("/post/{id}")
     public PostAllResponseDto updatePost(@PathVariable final Long id,
-                                         @RequestBody @Valid final PostRequestDto postRequestDto,
+                                         @RequestBody @Valid PostRequestDto postRequestDto,
                                          @AuthenticationPrincipal final UserDetailsImpl userDetails) {
         return postService.updatePost(id, postRequestDto, userDetails.getUser());
     }

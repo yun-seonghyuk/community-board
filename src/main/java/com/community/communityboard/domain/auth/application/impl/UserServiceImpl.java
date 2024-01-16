@@ -27,10 +27,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void signup(final SignupRequestDto requestDto) {
 
-        emailDuplicateCheck(requestDto.getEmail());
+        emailDuplicateCheck(requestDto.email());
 
         UserRole role = userRoleCheck(requestDto);
-        String password = passwordEncoder.encode(requestDto.getPassword());
+        String password = passwordEncoder.encode(requestDto.password());
 
         userRepository.save( User.createUser(requestDto, password, role));
     }
@@ -42,8 +42,8 @@ public class UserServiceImpl implements UserService {
     }
 
     private UserRole userRoleCheck(SignupRequestDto requestDto) {
-        if (requestDto.isAdmin()) {
-            if (!ADMIN_TOKEN.equals(requestDto.getAdminToken())) {
+        if (requestDto.admin()) {
+            if (!ADMIN_TOKEN.equals(requestDto.adminToken())) {
                 throw new MemberException(INVALID_ADMIN_PASSWORD);
             }
             return UserRole.ADMIN;

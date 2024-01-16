@@ -52,8 +52,8 @@ public class Post {
     public static Post createPost(User user, PostRequestDto requestDto){
         return Post.builder()
                 .user(user)
-                .title(requestDto.getTitle())
-                .content(requestDto.getContent())
+                .title(requestDto.title())
+                .content(requestDto.content())
                 .viewCount(0)
                 .likeCount(0)
                 .createdAt(LocalDateTime.now())
@@ -62,8 +62,8 @@ public class Post {
     }
 
     public void postUpdate(PostRequestDto postRequestDto) {
-        this.title = postRequestDto.getTitle();
-        this.content = postRequestDto.getContent();
+        this.title = postRequestDto.title();
+        this.content = postRequestDto.content();
     }
 
 

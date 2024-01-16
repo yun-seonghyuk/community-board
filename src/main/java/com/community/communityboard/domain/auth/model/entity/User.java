@@ -34,9 +34,9 @@ public class User extends TimeStamped {
 
     public static User createUser(SignupRequestDto requestDto, String password, UserRole role) {
         return User.builder()
-                .username(requestDto.getUsername())
+                .username(requestDto.username())
                 .password(password)
-                .email(requestDto.getEmail())
+                .email(requestDto.email())
                 .role(role)
                 .build();
     }

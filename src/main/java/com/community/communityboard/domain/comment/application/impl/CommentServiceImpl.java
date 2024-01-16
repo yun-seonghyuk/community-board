@@ -32,7 +32,7 @@ public class CommentServiceImpl implements CommentService {
         Post post = findPostOrElseThrow(id);
 
         Comment comment = commentRepository.save(
-                Comment.createComment(user, post, requestDto.getContent()));
+                Comment.createComment(user, post, requestDto.content()));
 
         return CommentResponseDto.of(comment);
     }

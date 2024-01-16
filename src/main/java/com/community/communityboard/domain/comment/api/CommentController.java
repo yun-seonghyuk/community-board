@@ -21,7 +21,7 @@ public class CommentController {
 
     @PostMapping("/comment")
     public CommentResponseDto createComment(@PathVariable final Long postId,
-                                            @RequestBody @Valid final CommentRequestDto requestDto,
+                                            @RequestBody @Valid CommentRequestDto requestDto,
                                             @AuthenticationPrincipal final UserDetailsImpl userDetails) {
 
         return commentService.createComment(requestDto, userDetails.getUser(), postId);
@@ -30,7 +30,7 @@ public class CommentController {
     @PutMapping("/comment/{commentId}")
     public CommentResponseDto updateComment(@PathVariable final Long postId,
                                             @PathVariable final Long commentId,
-                                            @RequestBody @Valid final CommentRequestDto requestDto,
+                                            @RequestBody @Valid CommentRequestDto requestDto,
                                             @AuthenticationPrincipal final UserDetailsImpl userDetails) {
 
         return commentService.updateComment(postId, commentId, requestDto, userDetails.getUser());
