@@ -3,12 +3,13 @@ package com.community.communityboard.domain.post.model.entity;
 import jakarta.persistence.Id;
 import lombok.*;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
+import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.time.LocalDateTime;
 
-//@Document(indexName = "post")
+@Document(indexName = "post")
 @Getter
 @Setter
 @NoArgsConstructor

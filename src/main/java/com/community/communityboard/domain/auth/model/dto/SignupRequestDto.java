@@ -22,6 +22,7 @@ public record SignupRequestDto(
         String email,
 
         boolean admin,
+
         String adminToken
 ) {
 }

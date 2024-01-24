@@ -16,4 +16,5 @@ public class ElasticSearchConfig extends ElasticsearchConfiguration {
                 .connectedToLocalhost()
                 .build();
     }
+
 }
