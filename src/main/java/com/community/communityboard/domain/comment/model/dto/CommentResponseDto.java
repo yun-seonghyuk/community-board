@@ -2,19 +2,17 @@ package com.community.communityboard.domain.comment.model.dto;
 
 import com.community.communityboard.domain.comment.model.entity.Comment;
 import lombok.Builder;
-import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@Getter
 @Builder
-public class CommentResponseDto {
-
-    private Long id;
-    private String username;
-    private String content;
-    private LocalDateTime createAt;
-    private LocalDateTime modifiedAt;
+public record CommentResponseDto(
+        Long id,
+        String username,
+        String content,
+        LocalDateTime createAt,
+        LocalDateTime modifiedAt
+) {
 
     public static CommentResponseDto of(Comment comment) {
         return CommentResponseDto.builder()
@@ -26,4 +24,3 @@ public class CommentResponseDto {
                 .build();
     }
 }
-

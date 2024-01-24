@@ -51,7 +51,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostResponseDto getPost(Long id) {
-        Post post = findPostOrElseThrow(id);
+
+        Post post = postRepository.findPostWithCommentsById(id);
         postViewCount(id);
         return PostResponseDto.of(post);
     }
@@ -60,12 +61,6 @@ public class PostServiceImpl implements PostService {
         redisTemplate
                 .opsForValue()
                 .increment(RedisUtil.postViewKey(postId), 1);
-    }
-    // dto 반환 좋아요
-    private Integer getLikesCountForPost(Long postId) {
-        String likes = redisTemplate.opsForValue()
-                .get(RedisUtil.postLikesKey(postId));
-        return likes != null ? Integer.parseInt(likes) : 0;
     }
 
     @Override
