@@ -10,8 +10,6 @@ import lombok.*;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder(access = AccessLevel.PRIVATE)
 @Table(name = "users")
 public class User extends TimeStamped {
 
@@ -31,6 +29,14 @@ public class User extends TimeStamped {
     @Column
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
+
+    @Builder
+    public User(String username, String password, String email, UserRole role) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
 
     public static User createUser(SignupRequestDto requestDto, String password, UserRole role) {
         return User.builder()

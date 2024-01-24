@@ -46,7 +46,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                     )
             );
         } catch (IOException e) {
-            log.error(e.getMessage());
+            log.info(e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
     }

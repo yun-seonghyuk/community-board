@@ -29,7 +29,7 @@ public class Comment extends TimeStamped {
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -42,7 +42,7 @@ public class Comment extends TimeStamped {
     }
 
     public void commentUpdate(CommentRequestDto requestDto) {
-        this.content = requestDto.getContent();
+        this.content = requestDto.content();
         this.setModifiedAt(LocalDateTime.now());
     }
 

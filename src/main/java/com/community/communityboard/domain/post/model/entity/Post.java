@@ -29,10 +29,10 @@ public class Post {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column
+    @Column(nullable = false)
     private Integer viewCount;
 
-    @Column
+    @Column(nullable = false)
     private Integer likeCount;
 
     @Column(updatable = false)
@@ -45,14 +45,15 @@ public class Post {
     @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
+    @OrderBy("createdAt DESC")
     @OneToMany(mappedBy = "post", cascade = {CascadeType.ALL})
     private List<Comment> commentList;
 
     public static Post createPost(User user, PostRequestDto requestDto){
         return Post.builder()
                 .user(user)
-                .title(requestDto.getTitle())
-                .content(requestDto.getContent())
+                .title(requestDto.title())
+                .content(requestDto.content())
                 .viewCount(0)
                 .likeCount(0)
                 .createdAt(LocalDateTime.now())
@@ -61,8 +62,8 @@ public class Post {
     }
 
     public void postUpdate(PostRequestDto postRequestDto) {
-        this.title = postRequestDto.getTitle();
-        this.content = postRequestDto.getContent();
+        this.title = postRequestDto.title();
+        this.content = postRequestDto.content();
     }
 
 

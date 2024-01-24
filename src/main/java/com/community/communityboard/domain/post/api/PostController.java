@@ -6,6 +6,7 @@ import com.community.communityboard.domain.post.application.PostService;
 import com.community.communityboard.domain.post.model.dto.request.PostRequestDto;
 import com.community.communityboard.domain.post.model.dto.response.PostAllResponseDto;
 import com.community.communityboard.global.common.ServiceResult;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +29,7 @@ public class PostController {
         return ResponseEntity.ok()
                 .body(postService.createPost(requestDto, userDetails.getUser()));
     }
+
     @GetMapping("/posts")
     public ResponseEntity<?> getAllPosts(@PageableDefault(page = 0, size = 10,
             sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
