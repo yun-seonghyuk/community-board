@@ -13,8 +13,6 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder(access = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "post")
 public class Post {
@@ -48,6 +46,17 @@ public class Post {
     @OrderBy("createdAt DESC")
     @OneToMany(mappedBy = "post", cascade = {CascadeType.ALL})
     private List<Comment> commentList;
+
+    @Builder
+    public Post(String title, String content, Integer viewCount, Integer likeCount, LocalDateTime createdAt, LocalDateTime modifiedAt, User user) {
+        this.title = title;
+        this.content = content;
+        this.viewCount = viewCount;
+        this.likeCount = likeCount;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.user = user;
+    }
 
     public static Post createPost(User user, PostRequestDto requestDto){
         return Post.builder()
