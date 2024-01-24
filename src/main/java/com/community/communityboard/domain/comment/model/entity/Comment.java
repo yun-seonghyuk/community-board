@@ -5,9 +5,10 @@ import com.community.communityboard.domain.comment.model.dto.CommentRequestDto;
 import com.community.communityboard.domain.post.model.entity.Post;
 import com.community.communityboard.global.common.entity.TimeStamped;
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.time.LocalDateTime;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 @Getter
@@ -48,7 +49,6 @@ public class Comment extends TimeStamped {
 
     public void commentUpdate(CommentRequestDto requestDto) {
         this.content = requestDto.content();
-        this.setModifiedAt(LocalDateTime.now());
     }
 
 
